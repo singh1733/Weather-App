@@ -1,14 +1,19 @@
 function getUserInput(location) {
-  getWeather(location).then((weatherData) => {
-    if (weatherData !== "Invalid Location") {
-      dialog.close();
-      console.log(weatherData);
-      parseWeatherData(weatherData);
-    } else {
-      console.log("Invalid Location");
-      askForInput();
-    }
-  });
+  getWeather(location)
+    .then((weatherData) => {
+      let weatherArray = [];
+      if (weatherData !== "Invalid Location") {
+        dialog.close();
+        console.log(weatherData);
+        return (eatherArray = parseWeatherData(weatherData));
+      } else {
+        console.log("Invalid Location");
+        askForInput();
+      }
+    })
+    .then((weatherArray) => {
+      displayWeather(weatherArray);
+    });
 }
 
 async function getWeather(location) {
@@ -45,9 +50,7 @@ function parseWeatherData(weatherData) {
         condition,
         minTemp,
         maxTemp,
-        windMPH,
         chanceOfRain,
-        humidity,
       };
     } else {
       const temp = weatherData.current.temp_f;
@@ -64,14 +67,37 @@ function parseWeatherData(weatherData) {
 }
 
 function askForInput() {
-    dialog.show();
+  dialog.show();
 }
 
 const dialog = document.querySelector("dialog");
 const enterButton = document.querySelector("button");
-  enterButton.addEventListener("click", () => {
-    getUserInput(document.getElementById("location").value);
-  });
+enterButton.addEventListener("click", () => {
+  getUserInput(document.getElementById("location").value);
+});
 
+function displayWeather(weatherArray) {
+  displayCurrentWeather(weatherArray[0]);
+  displayForecast(weatherArray);
+}
+
+function displayCurrentWeather(currentObject) {
+  const obTemp = currentObject.temp;
+  const obCondition = currentObject.condition;
+  const obFeelsLike = currentObject.feelsLike;
+  const obWindMPH = currentObject.windMPH;
+  const obUV = currentObject.uv;
+  const obHumidity = currentObject.humidity;
+}
+
+function displayForecast(weatherArray) {
+  for (let i = 1; i < weatherArray.length; i++) {
+    const obTemp = weatherArray[i].temp;
+    const obCondition = weatherArray[i].condition;
+    const obMinTemp = weatherArray[i].minTemp;
+    const obMaxTemp = weatherArray[i].maxTemp;
+    const obChanceOfRain = weatherArray[i].chanceOfRain;
+  }
+}
 
 askForInput();
