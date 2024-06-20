@@ -44,16 +44,11 @@ function parseWeatherData(weatherData) {
       const condition = weatherData.forecast.forecastday[i - 1].day.condition;
       const minTemp = weatherData.forecast.forecastday[i - 1].day.mintemp_f;
       const maxTemp = weatherData.forecast.forecastday[i - 1].day.maxtemp_f;
-      const windMPH = weatherData.forecast.forecastday[i - 1].day.wind_mph;
-      const chanceOfRain =
-        weatherData.forecast.forecastday[i - 1].daily_chance_of_rain;
-      const humidity = weatherData.forecast.forecastday[i - 1].day.avghumidity;
       days[i] = {
         temp,
         condition,
         minTemp,
         maxTemp,
-        chanceOfRain,
       };
     } else {
       const temp = weatherData.current.temp_f;
@@ -91,13 +86,12 @@ function displayCurrentWeather(currentObject) {
   const obWindMPH = currentObject.windMPH;
   const obUV = currentObject.uv;
   const obHumidity = currentObject.humidity;
-  document.getElementById("curr-temp").textContent=obTemp;
-  document.getElementById("feels-like").textContent=obFeelsLike;
-  document.getElementById("condition").textContent=obCondition.text;
-  document.getElementById("wind").textContent=obWindMPH;
-  document.getElementById("humidity").textContent=obHumidity;
-  document.getElementById("uv").textContent=obUV;
-
+  document.getElementById("curr-temp").textContent = obTemp;
+  document.getElementById("feels-like").textContent = obFeelsLike;
+  document.getElementById("condition").textContent = obCondition.text;
+  document.getElementById("wind").textContent = obWindMPH;
+  document.getElementById("humidity").textContent = obHumidity;
+  document.getElementById("uv").textContent = obUV;
 }
 
 function displayForecast(weatherArray) {
@@ -106,7 +100,10 @@ function displayForecast(weatherArray) {
     const obCondition = weatherArray[i].condition;
     const obMinTemp = weatherArray[i].minTemp;
     const obMaxTemp = weatherArray[i].maxTemp;
-    const obChanceOfRain = weatherArray[i].chanceOfRain;
+    document.getElementById("temp"+i).textContent = obTemp;
+    document.getElementById("min"+i).textContent = obMinTemp;
+    document.getElementById("condition"+i).textContent = obCondition.text;
+    document.getElementById("max"+i).textContent = obMaxTemp;
   }
 }
 
