@@ -1,8 +1,7 @@
-function getUserInput() {
-  const location = "44087";
+function getUserInput(location) {
   getWeather(location).then((weatherData) => {
     console.log(weatherData);
-    parseWeatherData("forecast", weatherData, 0);
+    parseWeatherData( weatherData);
   });
 }
 
@@ -17,38 +16,40 @@ async function getWeather(location) {
   return weatherData;
 }
 
-function parseWeatherData(type, weatherData, dayNumber) {
-  if (type === "forecast") {
-    const temp = weatherData.forecast.forecastday[dayNumber].day.avgtemp_f;
-    const condition = weatherData.forecast.forecastday[dayNumber].day.condition;
-    const minTemp = weatherData.forecast.forecastday[dayNumber].day.mintemp_f;
-    const maxTemp = weatherData.forecast.forecastday[dayNumber].day.maxtemp_f;
-    const windMPH = weatherData.forecast.forecastday[dayNumber].day.wind_mph;
-    const chanceOfRain =
-      weatherData.forecast.forecastday[dayNumber].daily_chance_of_rain;
-    const humidity =
-      weatherData.forecast.forecastday[dayNumber].day.avghumidity;
-    return {
-      temp,
-      condition,
-      minTemp,
-      maxTemp,
-      windMPH,
-      chanceOfRain,
-      humidity,
-    };
-  } else if (type === "current") {
-    const temp = weatherData.forecast.forecastday[dayNumber].day.temp_f;
-    const condition = weatherData.forecast.forecastday[dayNumber].day.condition;
-    const feelsLike =
-      weatherData.forecast.forecastday[dayNumber].day.feelslike_f;
-    const windMPH = weatherData.forecast.forecastday[dayNumber].day.wind_mph;
-    const uv = weatherData.forecast.forecastday[dayNumber].uv;
-    const humidity =
-      weatherData.forecast.forecastday[dayNumber].day.avghumidity;
+function parseWeatherData(weatherData) {
+  const days = [];
+  for (let i = 0; i < 8; i++) {
+    if (i > 0) {
+      const temp = weatherData.forecast.forecastday[i].day.avgtemp_f;
+      const condition = weatherData.forecast.forecastday[i].day.condition;
+      const minTemp = weatherData.forecast.forecastday[i].day.mintemp_f;
+      const maxTemp = weatherData.forecast.forecastday[i].day.maxtemp_f;
+      const windMPH = weatherData.forecast.forecastday[i].day.wind_mph;
+      const chanceOfRain =
+        weatherData.forecast.forecastday[i].daily_chance_of_rain;
+      const humidity = weatherData.forecast.forecastday[i].day.avghumidity;
+      days[i] = {
+        temp,
+        condition,
+        minTemp,
+        maxTemp,
+        windMPH,
+        chanceOfRain,
+        humidity,
+      };
+    } else {
+      const temp = weatherData.current.temp_f;
+      const condition = weatherData.current.condition;
+      const feelsLike = weatherData.current.feelslike_f;
+      const windMPH = weatherData.current.wind_mph;
+      const uv = weatherData.current.uv;
+      const humidity = weatherData.current.avghumidity;
 
-    return { temp, condition, feelsLike, windMPH, uv, humidity };
+      days[0] = { temp, condition, feelsLike, windMPH, uv, humidity };
+    }
   }
+  return days;
 }
 
-getUserInput();
+const enterButton=document.querySelector("button");
+enterButton.addEventListener("click",()=>getUserInput(document.getElementById("location").value))
