@@ -5,14 +5,17 @@ function getUserInput(location) {
       if (weatherData !== "Invalid Location") {
         dialog.close();
         console.log(weatherData);
-        return (eatherArray = parseWeatherData(weatherData));
+        weatherArray = parseWeatherData(weatherData);
       } else {
         console.log("Invalid Location");
         askForInput();
       }
+      return weatherArray;
     })
     .then((weatherArray) => {
-      displayWeather(weatherArray);
+      if (weatherArray.length != 0) {
+        displayWeather(weatherArray);
+      }
     });
 }
 
@@ -20,7 +23,7 @@ async function getWeather(location) {
   const response = await fetch(
     "https://api.weatherapi.com/v1/forecast.json?key=3c559f8d37c146e887a191047241906&q=" +
       location +
-      "&days=7",
+      "&days=5",
     { mode: "cors" }
   );
 
@@ -35,7 +38,7 @@ async function getWeather(location) {
 
 function parseWeatherData(weatherData) {
   const days = [];
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 6; i++) {
     if (i > 0) {
       const temp = weatherData.forecast.forecastday[i - 1].day.avgtemp_f;
       const condition = weatherData.forecast.forecastday[i - 1].day.condition;
