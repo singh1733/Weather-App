@@ -1,7 +1,13 @@
 function getUserInput(location) {
   getWeather(location).then((weatherData) => {
-    console.log(weatherData);
-    parseWeatherData( weatherData);
+    if (weatherData !== "Invalid Location") {
+      dialog.close();
+      console.log(weatherData);
+      parseWeatherData(weatherData);
+    } else {
+      console.log("Invalid Location");
+      askForInput();
+    }
   });
 }
 
@@ -12,7 +18,13 @@ async function getWeather(location) {
       "&days=7",
     { mode: "cors" }
   );
+
   const weatherData = await response.json();
+
+  if (weatherData.error || !response.ok) {
+    return "Invalid Location";
+  }
+
   return weatherData;
 }
 
@@ -20,14 +32,14 @@ function parseWeatherData(weatherData) {
   const days = [];
   for (let i = 0; i < 8; i++) {
     if (i > 0) {
-      const temp = weatherData.forecast.forecastday[i].day.avgtemp_f;
-      const condition = weatherData.forecast.forecastday[i].day.condition;
-      const minTemp = weatherData.forecast.forecastday[i].day.mintemp_f;
-      const maxTemp = weatherData.forecast.forecastday[i].day.maxtemp_f;
-      const windMPH = weatherData.forecast.forecastday[i].day.wind_mph;
+      const temp = weatherData.forecast.forecastday[i - 1].day.avgtemp_f;
+      const condition = weatherData.forecast.forecastday[i - 1].day.condition;
+      const minTemp = weatherData.forecast.forecastday[i - 1].day.mintemp_f;
+      const maxTemp = weatherData.forecast.forecastday[i - 1].day.maxtemp_f;
+      const windMPH = weatherData.forecast.forecastday[i - 1].day.wind_mph;
       const chanceOfRain =
-        weatherData.forecast.forecastday[i].daily_chance_of_rain;
-      const humidity = weatherData.forecast.forecastday[i].day.avghumidity;
+        weatherData.forecast.forecastday[i - 1].daily_chance_of_rain;
+      const humidity = weatherData.forecast.forecastday[i - 1].day.avghumidity;
       days[i] = {
         temp,
         condition,
@@ -51,5 +63,15 @@ function parseWeatherData(weatherData) {
   return days;
 }
 
-const enterButton=document.querySelector("button");
-enterButton.addEventListener("click",()=>getUserInput(document.getElementById("location").value))
+function askForInput() {
+    dialog.show();
+}
+
+const dialog = document.querySelector("dialog");
+const enterButton = document.querySelector("button");
+  enterButton.addEventListener("click", () => {
+    getUserInput(document.getElementById("location").value);
+  });
+
+
+askForInput();
