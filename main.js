@@ -86,12 +86,14 @@ function displayCurrentWeather(currentObject) {
   const obWindMPH = currentObject.windMPH;
   const obUV = currentObject.uv;
   const obHumidity = currentObject.humidity;
-  document.getElementById("curr-temp").textContent = obTemp;
-  document.getElementById("feels-like").textContent = obFeelsLike;
+  document.getElementById("curr-temp").textContent = obTemp + "°F";
+  document.getElementById("feels-like").textContent =
+    "feels like: " + obFeelsLike + "°F";
   document.getElementById("condition").textContent = obCondition.text;
-  document.getElementById("wind").textContent = obWindMPH;
-  document.getElementById("humidity").textContent = obHumidity;
-  document.getElementById("uv").textContent = obUV;
+  document.getElementById("wind").textContent = "wind: " + obWindMPH + " mph";
+  document.getElementById("humidity").textContent =
+    "humidity: " + obHumidity + "%";
+  document.getElementById("uv").textContent = "uv: " + obUV;
 }
 
 function displayForecast(weatherArray) {
