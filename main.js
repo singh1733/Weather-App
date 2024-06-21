@@ -7,10 +7,10 @@ function getUserInput(location) {
         console.log(weatherData);
         weatherArray = parseWeatherData(weatherData);
       } else {
-        console.log("Invalid Location");
+        document.getElementById("error").style.visibility="visible";
         askForInput();
       }
-      return {weatherArray,weatherData};
+      return { weatherArray, weatherData };
     })
     .then((weather) => {
       if (weather.weatherArray.length != 0) {
@@ -64,21 +64,15 @@ function parseWeatherData(weatherData) {
   return days;
 }
 
-function askForInput() {
-  dialog.show();
-}
-
-const dialog = document.querySelector("dialog");
-const enterButton = document.querySelector("button");
-enterButton.addEventListener("click", () => {
-  getUserInput(document.getElementById("location").value);
-});
-
 function displayWeather(weather) {
+  const locationButton = document.getElementById("location-set");
+  locationButton.style.visibility="visible";
+  locationButton.addEventListener("click", askForInput);
   document
     .getElementById("weather-container")
     .setAttribute("style", "visibility: visible");
-  document.getElementById("location-title").textContent = weather.weatherData.location.name;
+  document.getElementById("location-title").textContent =
+    weather.weatherData.location.name;
   displayCurrentWeather(weather.weatherArray[0]);
   displayForecast(weather.weatherArray);
 }
@@ -118,5 +112,15 @@ function displayForecast(weatherArray) {
       "high: <b>" + obMaxTemp + "<b>";
   }
 }
+
+function askForInput() {
+  dialog.show();
+}
+
+const dialog = document.querySelector("dialog");
+const enterButton = document.querySelector("button");
+enterButton.addEventListener("click", () => {
+  getUserInput(document.getElementById("location").value);
+});
 
 askForInput();
