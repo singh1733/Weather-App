@@ -75,6 +75,9 @@ enterButton.addEventListener("click", () => {
 });
 
 function displayWeather(weatherArray) {
+  document
+    .getElementById("weather-container")
+    .setAttribute("style", "visibility: visible");
   displayCurrentWeather(weatherArray[0]);
   displayForecast(weatherArray);
 }
@@ -86,7 +89,8 @@ function displayCurrentWeather(currentObject) {
   const obWindMPH = currentObject.windMPH;
   const obUV = currentObject.uv;
   const obHumidity = currentObject.humidity;
-  document.getElementById("curr-temp").textContent = obTemp + "°F";
+  document.getElementById("curr-temp-num").textContent = obTemp + "°F";
+  document.getElementById("cur-img").src=obCondition.icon;
   document.getElementById("feels-like").textContent =
     "feels like: " + obFeelsLike + "°F";
   document.getElementById("condition").textContent = obCondition.text;
@@ -102,10 +106,11 @@ function displayForecast(weatherArray) {
     const obCondition = weatherArray[i].condition;
     const obMinTemp = weatherArray[i].minTemp;
     const obMaxTemp = weatherArray[i].maxTemp;
-    document.getElementById("temp"+i).textContent = obTemp;
-    document.getElementById("min"+i).textContent = obMinTemp;
-    document.getElementById("condition"+i).textContent = obCondition.text;
-    document.getElementById("max"+i).textContent = obMaxTemp;
+    document.getElementById("temp" + i).textContent = obTemp;
+    document.getElementById(i).querySelector("img").src = obCondition.icon;
+    document.getElementById("min" + i).innerHTML = "low: <b>"+obMinTemp+"<b>";
+    document.getElementById("condition" + i).textContent = obCondition.text;
+    document.getElementById("max" + i).innerHTML = "high: <b>"+obMaxTemp+"<b>";
   }
 }
 

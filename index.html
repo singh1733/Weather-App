@@ -13,10 +13,13 @@
       <input type="text" id="location" name="location" required />
       <button>Enter</button>
     </dialog>
-    <div id="weather-container">
+    <div id="weather-container" style="visibility: hidden">
       <div id="current">
         <div id="temp">
-          <div id="curr-temp"></div>
+          <div id="curr-temp">
+            <img src="#" id="cur-img" />
+            <p id="curr-temp-num"></p>
+          </div>
           <div id="feels-like"></div>
         </div>
         <div id="characteristics">
@@ -27,35 +30,40 @@
         </div>
       </div>
       <div id="forecast">
-        <div id="1">
-          <div id="temp1"></div>
+        <div id="1" class="day-container">
+          <img src="#" />
+          <div id="temp1" class="temp"></div>
           <div id="min1"></div>
           <div id="max1"></div>
-          <div id="condition1"></div>
+          <div id="condition1" class="condition"></div>
         </div>
-        <div id="2">
-          <div id="temp2"></div>
+        <div id="2" class="day-container">
+          <img src="#" />
+          <div id="temp2" class="temp"></div>
           <div id="min2"></div>
           <div id="max2"></div>
-          <div id="condition2"></div>
+          <div id="condition2" class="condition"></div>
         </div>
-        <div id="3">
-          <div id="temp3"></div>
+        <div id="3" class="day-container">
+          <img src="#" />
+          <div id="temp3" class="temp"></div>
           <div id="min3"></div>
           <div id="max3"></div>
-          <div id="condition3"></div>
+          <div id="condition3" class="condition"></div>
         </div>
-        <div id="4">
-          <div id="temp4"></div>
+        <div id="4" class="day-container">
+          <img src="#" />
+          <div id="temp4" class="temp"></div>
           <div id="min4"></div>
           <div id="max4"></div>
-          <div id="condition4"></div>
+          <div id="condition4" class="condition"></div>
         </div>
-        <div id="5">
-          <div id="temp5"></div>
+        <div id="5" class="day-container">
+          <img src="#" />
+          <div id="temp5" class="temp"></div>
           <div id="min5"></div>
           <div id="max5"></div>
-          <div id="condition5"></div>
+          <div id="condition5" class="condition"></div>
         </div>
       </div>
     </div>
