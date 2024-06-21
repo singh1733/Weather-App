@@ -7,7 +7,7 @@ function getUserInput(location) {
         console.log(weatherData);
         weatherArray = parseWeatherData(weatherData);
       } else {
-        document.getElementById("error").style.visibility="visible";
+        document.getElementById("error").style.visibility = "visible";
         askForInput();
       }
       return { weatherArray, weatherData };
@@ -40,11 +40,13 @@ function parseWeatherData(weatherData) {
   const days = [];
   for (let i = 0; i < 6; i++) {
     if (i > 0) {
+      const date = weatherData.forecast.forecastday[i - 1].date;
       const temp = weatherData.forecast.forecastday[i - 1].day.avgtemp_f;
       const condition = weatherData.forecast.forecastday[i - 1].day.condition;
       const minTemp = weatherData.forecast.forecastday[i - 1].day.mintemp_f;
       const maxTemp = weatherData.forecast.forecastday[i - 1].day.maxtemp_f;
       days[i] = {
+        date,
         temp,
         condition,
         minTemp,
@@ -66,7 +68,7 @@ function parseWeatherData(weatherData) {
 
 function displayWeather(weather) {
   const locationButton = document.getElementById("location-set");
-  locationButton.style.visibility="visible";
+  locationButton.style.visibility = "visible";
   locationButton.addEventListener("click", askForInput);
   document
     .getElementById("weather-container")
@@ -98,19 +100,36 @@ function displayCurrentWeather(currentObject) {
 
 function displayForecast(weatherArray) {
   for (let i = 1; i < weatherArray.length; i++) {
+    const obDate = weatherArray[i].date;
     const obTemp = weatherArray[i].temp;
     const obCondition = weatherArray[i].condition;
     const obMinTemp = weatherArray[i].minTemp;
     const obMaxTemp = weatherArray[i].maxTemp;
-    document.getElementById("temp" + i).textContent = obTemp;
+    document.getElementById("date" + i).textContent = getDayName(obDate);
+    document.getElementById("temp" + i).textContent = obTemp + "°F";
     document.getElementById(i).querySelector("img").src = obCondition.icon;
     document.getElementById("min" + i).innerHTML =
-      "low: <b>" + obMinTemp + "<b>";
+      "low: <b>" + obMinTemp + "<b>" + "°F";
     document.getElementById("condition" + i).textContent =
       obCondition.text.toLowerCase();
     document.getElementById("max" + i).innerHTML =
-      "high: <b>" + obMaxTemp + "<b>";
+      "high: <b>" + obMaxTemp + "<b>" + "°F";
   }
+}
+
+function getDayName(dateString) {
+  const date = new Date(dateString);
+  const daysOfWeek = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+  const dayName = daysOfWeek[date.getDay()];
+  return dayName;
 }
 
 function askForInput() {
