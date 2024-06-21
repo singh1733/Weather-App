@@ -10,11 +10,11 @@ function getUserInput(location) {
         console.log("Invalid Location");
         askForInput();
       }
-      return weatherArray;
+      return {weatherArray,weatherData};
     })
-    .then((weatherArray) => {
-      if (weatherArray.length != 0) {
-        displayWeather(weatherArray);
+    .then((weather) => {
+      if (weather.weatherArray.length != 0) {
+        displayWeather(weather);
       }
     });
 }
@@ -74,12 +74,13 @@ enterButton.addEventListener("click", () => {
   getUserInput(document.getElementById("location").value);
 });
 
-function displayWeather(weatherArray) {
+function displayWeather(weather) {
   document
     .getElementById("weather-container")
     .setAttribute("style", "visibility: visible");
-  displayCurrentWeather(weatherArray[0]);
-  displayForecast(weatherArray);
+  document.getElementById("location-title").textContent = weather.weatherData.location.name;
+  displayCurrentWeather(weather.weatherArray[0]);
+  displayForecast(weather.weatherArray);
 }
 
 function displayCurrentWeather(currentObject) {
@@ -90,10 +91,11 @@ function displayCurrentWeather(currentObject) {
   const obUV = currentObject.uv;
   const obHumidity = currentObject.humidity;
   document.getElementById("curr-temp-num").textContent = obTemp + "°F";
-  document.getElementById("cur-img").src=obCondition.icon;
+  document.getElementById("cur-img").src = obCondition.icon;
   document.getElementById("feels-like").textContent =
     "feels like: " + obFeelsLike + "°F";
-  document.getElementById("condition").textContent = obCondition.text;
+  document.getElementById("condition").textContent =
+    "condition: " + obCondition.text.toLowerCase();
   document.getElementById("wind").textContent = "wind: " + obWindMPH + " mph";
   document.getElementById("humidity").textContent =
     "humidity: " + obHumidity + "%";
@@ -108,9 +110,12 @@ function displayForecast(weatherArray) {
     const obMaxTemp = weatherArray[i].maxTemp;
     document.getElementById("temp" + i).textContent = obTemp;
     document.getElementById(i).querySelector("img").src = obCondition.icon;
-    document.getElementById("min" + i).innerHTML = "low: <b>"+obMinTemp+"<b>";
-    document.getElementById("condition" + i).textContent = obCondition.text;
-    document.getElementById("max" + i).innerHTML = "high: <b>"+obMaxTemp+"<b>";
+    document.getElementById("min" + i).innerHTML =
+      "low: <b>" + obMinTemp + "<b>";
+    document.getElementById("condition" + i).textContent =
+      obCondition.text.toLowerCase();
+    document.getElementById("max" + i).innerHTML =
+      "high: <b>" + obMaxTemp + "<b>";
   }
 }
 
