@@ -22,7 +22,6 @@ svg {
   max-width: 100%;
 }
 
-
 input,
 button,
 textarea,
@@ -72,11 +71,11 @@ button {
 }
 
 dialog {
-    align-self: center;
-    justify-self: center;
-    font-size: 40px;
-    border-radius: 10px;
-  }
+  align-self: center;
+  justify-self: center;
+  font-size: 40px;
+  border-radius: 10px;
+}
 
 body {
   font-family: "Oswald", sans-serif;
@@ -165,18 +164,17 @@ body {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   background-color: white;
-  
+
   padding: 5px;
 }
 
-.day-container:last-child{
-    border-bottom-right-radius: 10px;
+.day-container:last-child {
+  border-bottom-right-radius: 10px;
 }
 
-.day-container:first-child{
-    border-bottom-left-radius: 10px;
+.day-container:first-child {
+  border-bottom-left-radius: 10px;
 }
-
 
 .temp {
   font-size: 30px;
@@ -195,13 +193,13 @@ body {
   border-radius: 10px;
 }
 
-.day-container div:first-child{
-    grid-column: 1/3;
-    font-weight: bold;
-    font-size: 20px;
+.day-container div:first-child {
+  grid-column: 1/3;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .day-container :nth-child(4),
-.day-container :nth-child(5){
-    font-size: 10px;
+.day-container :nth-child(5) {
+  font-size: 10px;
 }
